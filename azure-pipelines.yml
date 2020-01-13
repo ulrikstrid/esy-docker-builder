@@ -1,0 +1,31 @@
+# Docker
+# Build a Docker image 
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- master
+
+resources:
+- repo: self
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:  
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: 'ubuntu-latest'
+    strategy:
+      matrix: {
+        490: { OCAML_VERSION: '4.9.0' },
+        481: { OCAML_VERSION: '4.8.1' }
+      }
+    steps:
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        command: build
+        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+        tags: $OCAML_VERSION
+        arguments: --build-arg ocaml_version=$OCAML_VERSION
