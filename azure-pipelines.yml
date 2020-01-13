@@ -28,4 +28,4 @@ stages:
         command: build
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: $OCAML_VERSION
-        arguments: --build-arg ocaml_version=$OCAML_VERSION
+        arguments: --build-arg ocaml_version=$(OCAML_VERSION)
