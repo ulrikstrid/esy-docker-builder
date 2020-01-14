@@ -23,9 +23,23 @@ stages:
       }
     steps:
     - task: Docker@2
+      inputs:
+        containerRegistry: 'Docker hub ulrikaugstsson'
+        command: 'login'
+
+    - task: Docker@2
       displayName: Build an image
       inputs:
         command: build
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: $OCAML_VERSION
+        containerRegistry: 'Docker hub ulrikaugstsson'
+        repository: 'ulrikaugustsson/esy-docker-builder'
+        tags: '$(OCAML_VERSION)'
         arguments: --build-arg ocaml_version=$(OCAML_VERSION)
+
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'Docker hub ulrikaugstsson'
+        repository: 'ulrikaugustsson/esy-docker-builder'
+        command: 'push'
+        tags: '$(OCAML_VERSION)'
