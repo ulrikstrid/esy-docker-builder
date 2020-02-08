@@ -7,7 +7,7 @@ RUN mkdir /esy
 WORKDIR /esy
 
 ENV NPM_CONFIG_PREFIX=/esy
-RUN npm install -g --unsafe-perm esy@0.6.0
+RUN npm install -g --unsafe-perm esy@0.6.2
 
 # now that we have esy installed we need a proper runtime
 # we should be able to use the esy install script in the future
