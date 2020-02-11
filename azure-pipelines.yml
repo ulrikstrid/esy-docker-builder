@@ -9,8 +9,40 @@ resources:
 - repo: self
 
 stages:
+- stage: Base
+  displayName: Build base image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: Docker@2
+      displayName: Login to the registry
+      inputs:
+        containerRegistry: 'Docker hub ulrikaugstsson'
+        command: 'login'
+
+    - task: Docker@2
+      displayName: Build image with esy
+      inputs:
+        command: build
+        dockerfile: '$(Build.SourcesDirectory)/Dockerfile.base'
+        containerRegistry: 'Docker hub ulrikaugstsson'
+        repository: 'ulrikaugustsson/esy'
+        tags: 'latest'
+
+    - task: Docker@2
+      displayName: Push image with esy
+      inputs:
+        containerRegistry: 'Docker hub ulrikaugstsson'
+        repository: 'ulrikaugustsson/esy'
+        command: 'push'
+        tags: 'latest'
+
 - stage: Build
   displayName: Build image
+  dependsOn: [Base]
   jobs:  
   - job: Build
     displayName: Build
