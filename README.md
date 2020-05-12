@@ -1,3 +1,10 @@
+# Deprecated
+
+The goal of this repo was to produce pre-built containers for `esy` and web development using it.
+There's a new effort here that will be supported in the near future:
+
+https://github.com/reason-native-web/docker
+
 # esy-docker-builder
 
 [![Build Status](https://dev.azure.com/strid/esy-docker-builder/_apis/build/status/ulrikstrid.esy-docker-builder?branchName=master)](https://dev.azure.com/strid/esy-docker-builder/_build/latest?definitionId=40&branchName=master)
